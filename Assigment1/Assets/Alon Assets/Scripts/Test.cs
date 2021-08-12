@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Test : MonoBehaviour
 {
     public Text text;
+    public Text DirecText;
     int num;
 
     // Start is called before the first frame update
@@ -22,6 +23,7 @@ public class Test : MonoBehaviour
         {
             num++;
             text.text = "" + num;
+            DirecText.text = "Reset";
         }
     }
 }

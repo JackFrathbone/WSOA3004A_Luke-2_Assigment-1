@@ -10,7 +10,7 @@ public class SensorHandler : MonoBehaviour
     public Text Calibratetxt;
     public Text AccelText;
     
-    public float ScaleVal;
+    
 
 
     public Text MaxAccelX;
@@ -19,6 +19,13 @@ public class SensorHandler : MonoBehaviour
     public Text MaxAccelY;
     float MaxAccY = 0;
     bool calibrated = false;
+
+    string PreviousDirec = "";
+    string PlayerDirec = "";
+
+    bool isWaiting = true;
+    public float Threshold = 1;
+    public float ScaleVal =1;
     //phone co ords dont match with unit co ords if phone rotated
 
 
@@ -26,7 +33,7 @@ public class SensorHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        //InvokeRepeating("MovementHandler", 0f, 0.2f);
     }
 
     // Update is called once per frame
@@ -36,20 +43,10 @@ public class SensorHandler : MonoBehaviour
         //if (calibrated == true)
         // {
         MovementHandler();
+       // if (isWaiting == true) { StartCoroutine("MovementHandler");}
+
         // }
 
-        /*
-        if (Input.acceleration.x * ScaleVal > MaxAccX)
-        {
-            MaxAccX = Input.acceleration.x * ScaleVal;
-            MaxAccelX.text = "Max X: " + MaxAccX;
-        }
-        if (Input.acceleration.y * ScaleVal > MaxAccY)
-        {
-            MaxAccY = Input.acceleration.y * ScaleVal;
-            MaxAccelY.text = "Max Y: " + MaxAccY;
-        }
-        */
 
         if (Input.GetMouseButtonDown(0) == true)
         {
@@ -89,7 +86,7 @@ public class SensorHandler : MonoBehaviour
         }
     }
 
-
+    //IEnumerator
     void MovementHandler()
     {
         Vector3 Move = Input.acceleration * ScaleVal; //with some scale
@@ -111,10 +108,9 @@ public class SensorHandler : MonoBehaviour
         }
 
 
-        AccelText.text = "" + Move;
+        AccelText.text = "" + Move; //show acceleration real time
 
-
-
+        //show positive max acceleration X and Y axis
         if (Move.x > MaxAccX)
         {
             MaxAccX = Move.x;
@@ -130,42 +126,53 @@ public class SensorHandler : MonoBehaviour
 
 
 
-        float Threshold = 1;
-
-
-
-
         if (Move.y > Threshold) //(0,1,0)
         {
-            DirecTxt.text = "UP";
+            DirecTxt.text = "up";
+            PlayerDirec = "up";
+            //yield return new WaitForSeconds(5);
             Debug.Log("UP " + Move.y);
-        }
-        if (Move.y < -Threshold) //(0,-1,0)
-        {
-            DirecTxt.text = "DOWN";
-            Debug.Log("DOWN " + Move.y);
-        }
-        if (Move.x < -Threshold) //(-1,0,0)
-        {
-            DirecTxt.text = "LEFT";
-            Debug.Log("LEFT " + Move.x);
-        }
-        if (Move.x > Threshold) //(1,0,0)
-        {
-            DirecTxt.text = "RIGHT";
-            Debug.Log("RIGHT " + Move.x);
-        }
+            isWaiting = false;
 
-        /*
-        if (MoveR.z >= Vector3.forward.z) //(0,0,1)
-        {
-            DirecTxt.text = "FORWARD";
         }
-        if (MoveR.z <= Vector3.back.z) //(0,0,-1)
+        else if (Move.y < -Threshold) //(0,-1,0)
         {
-            DirecTxt.text = "BACK";
+            DirecTxt.text = "down";
+            PlayerDirec = "down";
+            Debug.Log("DOWN " + Move.y);
+            isWaiting = false;
+            //yield return new WaitForSeconds(1);
         }
-        */
+        else if (Move.x < -Threshold) //(-1,0,0)
+        {
+            DirecTxt.text = "left";
+            PlayerDirec = "left";
+            Debug.Log("LEFT " + Move.x);
+            isWaiting = false;
+        }
+        else if (Move.x > Threshold) //(1,0,0)
+        {
+            DirecTxt.text = "right";
+            PlayerDirec = "right";
+            Debug.Log("RIGHT " + Move.x);
+            isWaiting = false;
+        }
+        //else if() { DirecTxt.text = "Waiting"; }
+
+
+        //yield return new WaitForSeconds(1f);
+        isWaiting = true;
+        //if (PlayerDirec != PreviousDirec)
+        // {
+        //     yield return new WaitForSeconds(1);
+        //      Debug.Log("Waiting");
+        //  }
+        //  else
+        //  {
+        //    PreviousDirec = PlayerDirec;
+        //  }
+
+
     }
 
 }

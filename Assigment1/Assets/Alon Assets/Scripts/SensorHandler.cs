@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,9 +9,6 @@ public class SensorHandler : MonoBehaviour
     public Text Calibratetxt;
     public Text AccelText;
     
-    
-
-
     public Text MaxAccelX;
     float MaxAccX = 0;
 
@@ -28,17 +24,13 @@ public class SensorHandler : MonoBehaviour
     public float ScaleVal =1;
     //phone co ords dont match with unit co ords if phone rotated
 
-
-
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         //InvokeRepeating("MovementHandler", 0f, 0.2f);
         StartCoroutine("MovementHandler");
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         //CheckOrientation();
         //if (calibrated == true)
@@ -60,7 +52,7 @@ public class SensorHandler : MonoBehaviour
 
     }
 
-    void CheckOrientation()
+    private void CheckOrientation()
     {
         //if (Input.acceleration.x < 1 && Input.acceleration.y < 1 && Input.acceleration.z < 1 && Input.acceleration.x > -1 && Input.acceleration.y > -1 && Input.acceleration.z > -1)
         //{
@@ -88,7 +80,7 @@ public class SensorHandler : MonoBehaviour
     }
 
     //IEnumerator
-    IEnumerator MovementHandler()
+    private IEnumerator MovementHandler()
     {
         Vector3 Move = Input.acceleration * ScaleVal; //with some scale
 

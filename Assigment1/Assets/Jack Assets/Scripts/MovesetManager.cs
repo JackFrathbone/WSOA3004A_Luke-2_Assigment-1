@@ -14,6 +14,11 @@ public class MovesetManager : MonoBehaviour
 
     private bool _hasStarted;
 
+    //For the audio feedback
+    private AudioSource _audio;
+    public AudioClip pass;
+    public AudioClip fail;
+
     //Keep this script in the same object as UIVisuals
     private UIVisuals _visuals;
 
@@ -31,6 +36,8 @@ public class MovesetManager : MonoBehaviour
 
         _visuals = GetComponent<UIVisuals>();
         _scoreText = endScreen.GetComponentInChildren<TextMeshProUGUI>();
+
+        _audio = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -149,9 +156,16 @@ public class MovesetManager : MonoBehaviour
         if(direction == _currentMove)
         {
             NextMove(true);
+            //For the pass feedback
+            _audio.clip = pass;
+            _audio.Play();
             return true;
         }
         NextMove(false);
+        //For the fail feedback
+        Handheld.Vibrate();
+        _audio.clip = fail;
+        _audio.Play();
         return false;
     }
 }

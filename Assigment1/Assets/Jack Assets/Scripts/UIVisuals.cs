@@ -52,7 +52,7 @@ public class UIVisuals : MonoBehaviour
             arrowVisual.color = failColor;
         }
 
-        StartCoroutine(WaitAndHideArrow(3f));
+        StartCoroutine(WaitAndHideArrow(1f));
     }
 
     public void HideArrow()

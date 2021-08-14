@@ -34,6 +34,7 @@ public class SensorHandler : MonoBehaviour
     void Start()
     {
         //InvokeRepeating("MovementHandler", 0f, 0.2f);
+        StartCoroutine("MovementHandler");
     }
 
     // Update is called once per frame
@@ -42,7 +43,7 @@ public class SensorHandler : MonoBehaviour
         //CheckOrientation();
         //if (calibrated == true)
         // {
-        MovementHandler();
+        //MovementHandler();
        // if (isWaiting == true) { StartCoroutine("MovementHandler");}
 
         // }
@@ -87,7 +88,7 @@ public class SensorHandler : MonoBehaviour
     }
 
     //IEnumerator
-    void MovementHandler()
+    IEnumerator MovementHandler()
     {
         Vector3 Move = Input.acceleration * ScaleVal; //with some scale
 
@@ -157,10 +158,10 @@ public class SensorHandler : MonoBehaviour
             Debug.Log("RIGHT " + Move.x);
             isWaiting = false;
         }
-        //else if() { DirecTxt.text = "Waiting"; }
+        else if(Move.x > Threshold && Move.x < -Threshold && Move.y < -Threshold && Move.y > Threshold) { DirecTxt.text = "Waiting"; }
 
 
-        //yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1f);
         isWaiting = true;
         //if (PlayerDirec != PreviousDirec)
         // {
@@ -172,7 +173,7 @@ public class SensorHandler : MonoBehaviour
         //    PreviousDirec = PlayerDirec;
         //  }
 
-
+        StartCoroutine("MovementHandler");
     }
 
 }

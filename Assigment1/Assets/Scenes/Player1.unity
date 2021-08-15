@@ -1328,6 +1328,7 @@ MonoBehaviour:
   threshold: 1.5
   detectionDelay: 1
   orientationAlert: {fileID: 312605468}
+  _OrinetationDelay: 2
 --- !u!114 &1403857966
 MonoBehaviour:
   m_ObjectHideFlags: 0

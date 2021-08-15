@@ -16,6 +16,11 @@ public class SensorManager : MonoBehaviour
 
     public GameObject orientationAlert;
 
+    public float _OrinetationDelay = 1.0f;
+    float tempTime;
+    bool InitialRotate = false;
+    bool ResolveOrient = false;
+
     //detection of movement
     //if made a move should stop detecting for +-1f seconds
 
@@ -77,10 +82,14 @@ public class SensorManager : MonoBehaviour
 
     void OrientHandler()
     {
+        //device is landscape
         if (Input.deviceOrientation == DeviceOrientation.LandscapeLeft || Input.deviceOrientation == DeviceOrientation.LandscapeRight)
         {
             orientationAlert.SetActive(false);
             Time.timeScale = 1f;
+
+            InitialRotate = false;
+            ResolveOrient = false;
 
             if (Input.deviceOrientation == DeviceOrientation.LandscapeLeft)
             {
@@ -96,8 +105,31 @@ public class SensorManager : MonoBehaviour
         }
         else
         {
-            orientationAlert.SetActive(true);
-            Time.timeScale = 0f;
+            //Orientation is not landscape
+            InitialRotate = true;
+
+            //anouther bool
+
+            Debug.Log("Rotated");
+            Debug.Log("Initial rotate: "+ InitialRotate);
+
+            if (InitialRotate == true && ResolveOrient == false)
+            {
+                Debug.Log("Got in 1");
+                tempTime = Time.time;
+                InitialRotate = false;
+                ResolveOrient = true;
+            }
+            
+            if (Time.time - tempTime >= _OrinetationDelay)
+            {
+                Debug.Log("Got in 2");
+                orientationAlert.SetActive(true);
+                Time.timeScale = 0f;
+            }
+
+
+            
         }
     }
 }

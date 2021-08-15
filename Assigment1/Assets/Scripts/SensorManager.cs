@@ -101,7 +101,7 @@ public class SensorManager : MonoBehaviour
                 _moveX += -1;
             }
 
-            Debug.Log(Input.deviceOrientation);
+            //Debug.Log(Input.deviceOrientation);
         }
         else
         {
@@ -110,12 +110,12 @@ public class SensorManager : MonoBehaviour
 
             //anouther bool
 
-            Debug.Log("Rotated");
-            Debug.Log("Initial rotate: "+ InitialRotate);
+            //Debug.Log("Rotated");
+            //Debug.Log("Initial rotate: "+ InitialRotate);
 
             if (InitialRotate == true && ResolveOrient == false)
             {
-                Debug.Log("Got in 1");
+                //Debug.Log("Got in 1");
                 tempTime = Time.time;
                 InitialRotate = false;
                 ResolveOrient = true;
@@ -123,7 +123,7 @@ public class SensorManager : MonoBehaviour
             
             if (Time.time - tempTime >= _OrinetationDelay)
             {
-                Debug.Log("Got in 2");
+                //Debug.Log("Got in 2");
                 orientationAlert.SetActive(true);
                 Time.timeScale = 0f;
             }

@@ -29,6 +29,12 @@ public class MovesetManager : MonoBehaviour
     private int _scoreTotal;
     private int _scoreCurrent;
 
+    //For the timed turn
+    private bool _hasMoved;
+    public float turnTimerAmount;
+
+    public GameObject failPopup;
+
     private void Start()
     {
         //Fills the list in with the currently assigned moveset object
@@ -40,29 +46,10 @@ public class MovesetManager : MonoBehaviour
         _audio = GetComponent<AudioSource>();
     }
 
-    private void Update()
-    {
-        //Temp just for testing
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            LookUp();
-        }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            LookDown();
-        }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            LookLeft();
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            LookRight();
-        }
-    }
-
     public void StartMoveset()
     {
+        _hasMoved = false;
+
         //For restarting, hide the end screen & reset values
         endScreen.SetActive(false);
 
@@ -75,10 +62,23 @@ public class MovesetManager : MonoBehaviour
         _scoreCurrent = _scoreTotal;
 
         Debug.Log("Current move: " + _currentMove);
+
+        StartCoroutine("TurnTimer");
     }
 
     private void NextMove(bool passed)
     {
+        if (_hasMoved)
+        {
+            StopAllCoroutines();
+            _hasMoved = false;
+        }
+        else
+        {
+            _hasMoved = false;
+        }
+
+
         _onMove++;
 
         if (_onMove > _moves.Count-1)
@@ -99,6 +99,8 @@ public class MovesetManager : MonoBehaviour
 
         Debug.Log("Current move: " + _currentMove);
         Debug.Log("Current Score:" + _scoreCurrent +" /" +_scoreTotal);
+
+        StartCoroutine("TurnTimer");
     }
 
     private void EndMoveset()
@@ -155,17 +157,40 @@ public class MovesetManager : MonoBehaviour
     {
         if(direction == _currentMove)
         {
+            _hasMoved = true;
             NextMove(true);
             //For the pass feedback
             _audio.clip = pass;
             _audio.Play();
             return true;
         }
+        _hasMoved = true;
         NextMove(false);
         //For the fail feedback
         Handheld.Vibrate();
         _audio.clip = fail;
         _audio.Play();
         return false;
+    }
+
+    private IEnumerator TurnTimer()
+    {
+        yield return new WaitForSeconds(turnTimerAmount);
+        if (_hasMoved)
+        {
+            print(_hasMoved);
+            yield break;
+        }
+        else
+        {
+            print("yee");
+            failPopup.SetActive(true);
+            NextMove(false);
+            Handheld.Vibrate();
+            _audio.clip = fail;
+            _audio.Play();
+        }
+        yield return new WaitForSeconds(1f);
+        failPopup.SetActive(false);
     }
 }

@@ -14,8 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moves:
   - up
-  - down
   - left
+  - down
   - right
   - up
+  - right
   - down
+  - down
+  - up
+  - up
+  - right
+  - down
+  - up
+  - left
+  - right

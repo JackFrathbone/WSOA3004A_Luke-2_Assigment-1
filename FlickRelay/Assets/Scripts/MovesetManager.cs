@@ -81,7 +81,7 @@ public class MovesetManager : MonoBehaviour
 
         _onMove++;
 
-        if (_onMove > _moves.Count-1)
+        if (_onMove > _moves.Count - 1)
         {
             EndMoveset();
             return;
@@ -98,7 +98,7 @@ public class MovesetManager : MonoBehaviour
         }
 
         Debug.Log("Current move: " + _currentMove);
-        Debug.Log("Current Score:" + _scoreCurrent +" /" +_scoreTotal);
+        Debug.Log("Current Score:" + _scoreCurrent + " /" + _scoreTotal);
 
         StartCoroutine("TurnTimer");
     }
@@ -155,7 +155,7 @@ public class MovesetManager : MonoBehaviour
 
     private bool CurrentMoveCheck(string direction)
     {
-        if(direction == _currentMove)
+        if (direction == _currentMove)
         {
             _hasMoved = true;
             NextMove(true);
@@ -167,7 +167,9 @@ public class MovesetManager : MonoBehaviour
         _hasMoved = true;
         NextMove(false);
         //For the fail feedback
+        #if UNITY_ANDROID
         Handheld.Vibrate();
+        #endif
         _audio.clip = fail;
         _audio.Play();
         return false;
@@ -186,7 +188,9 @@ public class MovesetManager : MonoBehaviour
             print("yee");
             failPopup.SetActive(true);
             NextMove(false);
+            #if UNITY_ANDROID
             Handheld.Vibrate();
+            #endif
             _audio.clip = fail;
             _audio.Play();
         }

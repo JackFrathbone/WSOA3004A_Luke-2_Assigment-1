@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MovesetManager : MonoBehaviour
 {
@@ -35,6 +36,11 @@ public class MovesetManager : MonoBehaviour
 
     public GameObject failPopup;
 
+
+    //Colour fade timer
+    public Image Background;
+    float FadeDuration;
+
     private void Start()
     {
         //Fills the list in with the currently assigned moveset object
@@ -44,6 +50,9 @@ public class MovesetManager : MonoBehaviour
         _scoreText = endScreen.GetComponentInChildren<TextMeshProUGUI>();
 
         _audio = GetComponent<AudioSource>();
+
+
+        FadeDuration = turnTimerAmount;//
     }
 
     public void StartMoveset()
@@ -66,6 +75,8 @@ public class MovesetManager : MonoBehaviour
         Debug.Log("Current move: " + _currentMove);
 
         StartCoroutine("TurnTimer");
+        StartCoroutine("Test");//test for Colour fade timer------------------------------------------
+
     }
 
     private void NextMove(bool passed)
@@ -103,6 +114,7 @@ public class MovesetManager : MonoBehaviour
         Debug.Log("Current Score:" + _scoreCurrent + " /" + _scoreTotal);
 
         StartCoroutine("TurnTimer");
+        StartCoroutine("Test");//test for Colour fade timer----------------------------------
     }
 
     private void EndMoveset()
@@ -199,4 +211,27 @@ public class MovesetManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         failPopup.SetActive(false);
     }
+
+
+    private IEnumerator Test()//Colour fade function---------------------------------
+    {
+        float t = 0;
+        
+        while (t < FadeDuration)
+        {
+            t += Time.deltaTime;
+            Background.color = Color.Lerp(Color.white, Color.red, t / FadeDuration);
+            yield return null;
+
+        }
+
+
+    }
+
+
+
+
+
+
+
 }

@@ -48,6 +48,8 @@ public class MovesetManager : MonoBehaviour
 
     public void StartMoveset()
     {
+        _moves = new List<string>(moveset.moves);
+        
         _hasMoved = false;
 
         //For restarting, hide the end screen & reset values

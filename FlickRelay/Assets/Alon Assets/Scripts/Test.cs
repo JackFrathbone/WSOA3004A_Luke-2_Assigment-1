@@ -22,6 +22,14 @@ public class Test : MonoBehaviour
     public GameObject OrientationAlert;
     public GameObject Orienttxt;
 
+
+    //threshold timer
+    float tempTime=0;
+    public float thresholdTimer=0.3f;
+    bool isMoving = false;
+
+
+
     //detection of movement
     //if made a move should stop detecting for +-1f seconds
 
@@ -56,33 +64,101 @@ public class Test : MonoBehaviour
 
         if (MoveX > Threshold && Moved == false)//right
         {
-            Moved = true;
-            directiontxt.text = "left";
-            StartCoroutine("PauseHandler");
+            if (isMoving == false)
+            {
+                tempTime = Time.time;
+                isMoving = true;
+            }
+            
+
+            if (Time.time - tempTime >= thresholdTimer)
+            {
+                //do the thing
+                Debug.Log("held or threshold time");
+
+                Moved = true;
+                directiontxt.text = "left";
+                isMoving = false;
+                StartCoroutine("PauseHandler");
+
+            }
+        
         }
         if (MoveX < -Threshold && Moved == false)//left
         {
-            Moved = true;
-            directiontxt.text = "right";
-            StartCoroutine("PauseHandler");
+            if (isMoving == false)
+            {
+                tempTime = Time.time;
+                isMoving = true;
+            }
+
+            if (Time.time - tempTime >= thresholdTimer)
+            {
+                //do the thing
+                Debug.Log("held or threshold time");
+
+                Moved = true;
+                directiontxt.text = "right";
+                isMoving = false;
+                StartCoroutine("PauseHandler");
+            }
+               
         }
         if (MoveY > Threshold && Moved == false)//up
         {
-            Moved = true;
-            directiontxt.text = "down";
-            StartCoroutine("PauseHandler");
+
+            if (isMoving == false)
+            {
+                tempTime = Time.time;
+                isMoving = true;
+            }
+            if (Time.time - tempTime >= thresholdTimer)
+            {
+                Moved = true;
+                directiontxt.text = "down";
+                isMoving = false;
+                StartCoroutine("PauseHandler");
+            }
         }
         if (MoveY < -Threshold && Moved == false)//down
         {
-            Moved = true;
-            directiontxt.text = "up";
-            StartCoroutine("PauseHandler");
+
+            if (isMoving == false)
+            {
+                tempTime = Time.time;
+                isMoving = true;
+            }
+
+            if (Time.time - tempTime >= thresholdTimer)
+            {
+                Moved = true;
+                directiontxt.text = "up";
+                isMoving = false;
+                StartCoroutine("PauseHandler");
+            }
             
         }
 
 
 
     }
+
+
+    void ThresholdPassed()
+    {
+        //if ()
+        //{
+            tempTime = Time.time;
+        //}
+
+        if (Time.time - tempTime >= thresholdTimer)
+        {
+            //do the thing
+            Debug.Log("held or threshold time");
+        }
+    }
+
+
 
     IEnumerator PauseHandler()
     {
@@ -100,9 +176,6 @@ public class Test : MonoBehaviour
         //Debug.Log(Input.deviceOrientation);
         if (Input.deviceOrientation == DeviceOrientation.LandscapeLeft || Input.deviceOrientation == DeviceOrientation.LandscapeRight)
         {
-            OrientationAlert.SetActive(false);
-            Orienttxt.SetActive(false);
-            Time.timeScale = 1f;
 
             if (Input.deviceOrientation == DeviceOrientation.LandscapeLeft)
             {
@@ -116,12 +189,7 @@ public class Test : MonoBehaviour
 
             Debug.Log(Input.deviceOrientation);
         }
-        else
-        {
-            OrientationAlert.SetActive(true);
-            Orienttxt.SetActive(true);
-            Time.timeScale = 0f;
-        }
+
     }
 
 }

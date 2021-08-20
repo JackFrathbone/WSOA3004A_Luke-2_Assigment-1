@@ -18,8 +18,8 @@ public class SensorManager : MonoBehaviour
 
     public float _OrinetationDelay = 1.0f;
     float tempTime;
-    bool InitialRotate = false;
-    bool ResolveOrient = false;
+    //bool InitialRotate = false;
+    //bool ResolveOrient = false;
 
     //detection of movement
     //if made a move should stop detecting for +-1f seconds
@@ -88,8 +88,8 @@ public class SensorManager : MonoBehaviour
             orientationAlert.SetActive(false);
             Time.timeScale = 1f;
 
-            InitialRotate = false;
-            ResolveOrient = false;
+            //InitialRotate = false;
+            //ResolveOrient = false;
 
             if (Input.deviceOrientation == DeviceOrientation.LandscapeLeft)
             {
@@ -103,6 +103,7 @@ public class SensorManager : MonoBehaviour
 
             //Debug.Log(Input.deviceOrientation);
         }
+        /*
         else
         {
             //Orientation is not landscape
@@ -124,12 +125,13 @@ public class SensorManager : MonoBehaviour
             if (Time.time - tempTime >= _OrinetationDelay)
             {
                 //Debug.Log("Got in 2");
-                orientationAlert.SetActive(true);
-                Time.timeScale = 0f;
+                //orientationAlert.SetActive(true);
+                //Time.timeScale = 0f;
             }
 
-
+        
             
         }
+        */
     }
 }

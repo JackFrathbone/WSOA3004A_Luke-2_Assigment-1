@@ -52,7 +52,7 @@ public class MovesetManager : MonoBehaviour
         _audio = GetComponent<AudioSource>();
 
 
-        FadeDuration = turnTimerAmount;//
+        FadeDuration = turnTimerAmount-1f;//
     }
 
     public void StartMoveset()
@@ -176,6 +176,10 @@ public class MovesetManager : MonoBehaviour
             //For the pass feedback
             _audio.clip = pass;
             _audio.Play();
+
+            //for colour fade
+            Background.color = Color.green;//---------------------------------
+
             return true;
         }
         _hasMoved = true;
@@ -186,6 +190,10 @@ public class MovesetManager : MonoBehaviour
         #endif
         _audio.clip = fail;
         _audio.Play();
+
+        //for colour fade
+        Background.color = Color.red;//---------------------------------
+
         return false;
     }
 
@@ -216,7 +224,8 @@ public class MovesetManager : MonoBehaviour
     private IEnumerator Test()//Colour fade function---------------------------------
     {
         float t = 0;
-        
+        yield return new WaitForSeconds(1f);
+
         while (t < FadeDuration)
         {
             t += Time.deltaTime;

@@ -54,28 +54,10 @@ public class SensorHandler : MonoBehaviour
 
     private void CheckOrientation()
     {
-        //if (Input.acceleration.x < 1 && Input.acceleration.y < 1 && Input.acceleration.z < 1 && Input.acceleration.x > -1 && Input.acceleration.y > -1 && Input.acceleration.z > -1)
-        //{
-        //   DirecTxt.text = "Zero";
-        // }
-
-        //LandscapeLeft - The device is in landscape mode, with the device held upright and the home button on the right side.
-        //LandscapeRight - The device is in landscape mode, with the device held upright and the home button on the left side.
-        Debug.Log("Orientation " + Input.deviceOrientation);
-        Debug.Log("Calibrated " + calibrated);
         if (Input.deviceOrientation == DeviceOrientation.LandscapeLeft || Input.deviceOrientation == DeviceOrientation.LandscapeRight)
         {
             Time.timeScale = 1f;
-            calibrated = true;
-            Calibratetxt.text = "Calibrated = " + calibrated;
 
-        }
-        else
-        {
-            Time.timeScale = 0f;
-
-            calibrated = false;
-            Calibratetxt.text = "Please rotate the device landscape.";
         }
     }
 

@@ -14,12 +14,24 @@ public class SensorManager : MonoBehaviour
     public float threshold = 1.5f;
     public float detectionDelay = 1f;
 
-    public GameObject orientationAlert;
+    //public GameObject orientationAlert;
 
-    public float _OrinetationDelay = 1.0f;
-    float tempTime;
+    //public float _OrinetationDelay = 1.0f;
     //bool InitialRotate = false;
     //bool ResolveOrient = false;
+
+    //threshold timer
+    float tempTime1 = 0f;
+    float tempTime2 = 0f;
+    float tempTime3 = 0f;
+    float tempTime4 = 0f;
+
+    public float thresholdTimer = 0.3f; //time needed for acceleration over time.
+    bool _isMoving = false;
+    bool one = false;
+    bool two = false;
+    bool three = false;
+    bool four = false;
 
     //detection of movement
     //if made a move should stop detecting for +-1f seconds
@@ -35,7 +47,6 @@ public class SensorManager : MonoBehaviour
     private void Update()
     {
         AcceleHandler();
-        //OrientHandler();
     }
 
     void AcceleHandler()
@@ -45,36 +56,149 @@ public class SensorManager : MonoBehaviour
         _moveY = _accelVect.y;//up down
 
         OrientHandler();
+        //Debug.Log(Input.deviceOrientation +" | X: "+_moveX+" | Y: "+_moveY );
+
+        //if (Time.time - tempTime1 >= thresholdTimer)
+        //{
+        //    tempTime1 = Time.time;
+        //    Debug.Log("IFUCKEDIT");
+        //}
+
+        //while doing a move makes sure other timers are same as current time 
+        if (one == false)
+        {
+            tempTime2 = Time.time;
+            tempTime3 = Time.time;
+            tempTime4 = Time.time;
+        }
+
+        if (two == false)
+        {
+            tempTime1 = Time.time;
+            tempTime3 = Time.time;
+            tempTime4 = Time.time;
+        }
+
+        if (three == false)
+        {
+            tempTime1 = Time.time;
+            tempTime2 = Time.time;
+            tempTime4 = Time.time;
+        }
+
+        if (four == false)
+        {
+            tempTime1 = Time.time;
+            tempTime2 = Time.time;
+            tempTime3 = Time.time;
+        }
+
+
 
         if (_moveX > threshold && _moved == false)//left
         {
-            _movesetManager.LookLeft();
-            _moved = true;
-            StartCoroutine("PauseHandler");
+            if (_isMoving == false)
+            {
+                two = true;
+                three = true;
+                four = true;
+
+                tempTime1 = Time.time;
+                _isMoving = true;
+            }
+
+            if (Time.time - tempTime1 >= thresholdTimer)
+            {
+                tempTime1 = Time.time;
+                _movesetManager.LookLeft();
+                _moved = true;
+                _isMoving = false;
+                StartCoroutine("PauseHandler");
+            }
         }
+
         if (_moveX < -threshold && _moved == false)//right
         {
-            _movesetManager.LookRight();
-            _moved = true;
-            StartCoroutine("PauseHandler");
+            if (_isMoving == false)
+            {
+                one = true;
+                three = true;
+                four = true;
+
+                tempTime2 = Time.time;
+                _isMoving = true;
+            }
+
+            if (Time.time - tempTime2 >= thresholdTimer)
+            {
+                tempTime2 = Time.time;
+                _movesetManager.LookRight();
+                _moved = true;
+                _isMoving = false;
+                StartCoroutine("PauseHandler");
+            }
         }
+
         if (_moveY > threshold && _moved == false)//down
         {
-            _movesetManager.LookDown();
-            _moved = true;
-            StartCoroutine("PauseHandler");
+            if (_isMoving == false)
+            {
+                two = true;
+                one = true;
+                four = true;
+
+                tempTime3 = Time.time;
+                _isMoving = true;
+            }
+
+            if (Time.time - tempTime3 >= thresholdTimer)
+            {
+                tempTime3 = Time.time;
+                _movesetManager.LookDown();
+                _moved = true;
+                _isMoving = false;
+                StartCoroutine("PauseHandler");
+            }
         }
+
         if (_moveY < -threshold && _moved == false)//up
         {
-            _movesetManager.LookUp();
-            _moved = true;
-            StartCoroutine("PauseHandler");
+            if (_isMoving == false)
+            {
+                two = true;
+                three = true;
+                one = true;
+
+                tempTime4 = Time.time;
+                _isMoving = true;
+            }
+
+            if (Time.time - tempTime4 >= thresholdTimer)
+            {
+                tempTime4 = Time.time;
+                _movesetManager.LookUp();
+                _moved = true;
+                _isMoving = false;
+                StartCoroutine("PauseHandler");
+            }
 
         }
+
     }
 
     IEnumerator PauseHandler()
     {
+        //tempTime1 = Time.time;
+        //tempTime2 = Time.time;
+        //tempTime3 = Time.time;
+        //tempTime4 = Time.time;
+
+        one = false;
+        two = false;
+        three = false;
+        four = false;
+
+
         Debug.Log("MOVED");
         yield return new WaitForSeconds(detectionDelay);
         _moved = false;
@@ -82,26 +206,13 @@ public class SensorManager : MonoBehaviour
 
     void OrientHandler()
     {
-        //device is landscape
         if (Input.deviceOrientation == DeviceOrientation.LandscapeLeft || Input.deviceOrientation == DeviceOrientation.LandscapeRight)
         {
-            orientationAlert.SetActive(false);
-            Time.timeScale = 1f;
-
-            //InitialRotate = false;
-            //ResolveOrient = false;
-
-            if (Input.deviceOrientation == DeviceOrientation.LandscapeLeft)
-            {
                 _moveY += 1;
-            }
-            else if (Input.deviceOrientation == DeviceOrientation.LandscapeRight)
-            {
-
-                _moveX += -1;
-            }
-
-            //Debug.Log(Input.deviceOrientation);
+        }
+        else if (Input.deviceOrientation == DeviceOrientation.Portrait)
+        {
+            _moveX -= 1;
         }
         /*
         else

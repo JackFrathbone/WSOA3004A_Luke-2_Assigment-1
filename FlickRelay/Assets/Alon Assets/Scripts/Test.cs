@@ -41,9 +41,7 @@ public class Test : MonoBehaviour
     private void Update()
     {
         AcceleHandler();
-        //OrientHandler();
     }
-
 
 
     void AcceleHandler()
@@ -184,12 +182,15 @@ public class Test : MonoBehaviour
             else if (Input.deviceOrientation == DeviceOrientation.LandscapeRight)
             {
 
-                MoveX += -1;
+                MoveY += 1;
             }
 
             Debug.Log(Input.deviceOrientation);
         }
-
+        else if (Input.deviceOrientation == DeviceOrientation.Portrait)
+        {
+            MoveX += 1;
+        }
     }
 
 }

@@ -2070,7 +2070,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1300746000
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2665,10 +2665,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed6a509cf2ed994481c62ccc7bf8dd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  threshold: 1.5
-  detectionDelay: 1
-  orientationAlert: {fileID: 312605468}
-  _OrinetationDelay: 2
+  threshold: 1.8
+  detectionDelay: 0.6
+  thresholdTimer: 0.1
 --- !u!114 &1403857966
 MonoBehaviour:
   m_ObjectHideFlags: 0

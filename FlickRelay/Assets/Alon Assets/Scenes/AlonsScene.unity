@@ -1014,7 +1014,7 @@ MonoBehaviour:
   UDText: {fileID: 585790735}
   OrientationAlert: {fileID: 1329165915}
   Orienttxt: {fileID: 898913711}
-  thresholdTimer: 1
+  thresholdTimer: 0.5
 --- !u!4 &2014512585
 Transform:
   m_ObjectHideFlags: 0

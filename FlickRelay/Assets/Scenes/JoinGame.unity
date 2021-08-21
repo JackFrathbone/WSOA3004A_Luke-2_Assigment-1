@@ -2621,7 +2621,7 @@ MonoBehaviour:
   pass: {fileID: 8300000, guid: 5ca0e7daa67e45d4db973a6c5bc7e915, type: 3}
   fail: {fileID: 8300000, guid: fcd42ee35368c944cad54aea1b06ff62, type: 3}
   endScreen: {fileID: 970135411}
-  turnTimerAmount: 5
+  turnTimerAmount: 3
   failPopup: {fileID: 620770611}
   Background: {fileID: 2048096817}
 --- !u!114 &1403857963

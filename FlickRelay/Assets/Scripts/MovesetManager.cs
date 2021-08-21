@@ -140,6 +140,7 @@ public class MovesetManager : MonoBehaviour
         if (_hasStarted)
         {
             _visuals.ShowArrow("up", CurrentMoveCheck("up"));
+            failPopup.SetActive(false);
         }
     }
 
@@ -148,6 +149,7 @@ public class MovesetManager : MonoBehaviour
         if (_hasStarted)
         {
             _visuals.ShowArrow("down", CurrentMoveCheck("down"));
+            failPopup.SetActive(false);
         }
     }
 
@@ -156,6 +158,7 @@ public class MovesetManager : MonoBehaviour
         if (_hasStarted)
         {
             _visuals.ShowArrow("left", CurrentMoveCheck("left"));
+            failPopup.SetActive(false);
         }
     }
 
@@ -164,6 +167,7 @@ public class MovesetManager : MonoBehaviour
         if (_hasStarted)
         {
             _visuals.ShowArrow("right", CurrentMoveCheck("right"));
+            failPopup.SetActive(false);
         }
     }
 

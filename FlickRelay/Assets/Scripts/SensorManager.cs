@@ -21,17 +21,17 @@ public class SensorManager : MonoBehaviour
     //bool ResolveOrient = false;
 
     //threshold timer
-    float tempTime1 = 0f;
-    float tempTime2 = 0f;
-    float tempTime3 = 0f;
-    float tempTime4 = 0f;
+    //float tempTime1 = 0f;
+    //float tempTime2 = 0f;
+    //float tempTime3 = 0f;
+    //float tempTime4 = 0f;
 
     public float thresholdTimer = 0.3f; //time needed for acceleration over time.
     bool _isMoving = false;
-    bool one = false;
-    bool two = false;
-    bool three = false;
-    bool four = false;
+    //bool one = false;
+    //bool two = false;
+    //bool three = false;
+    //bool four = false;
 
     //detection of movement
     //if made a move should stop detecting for +-1f seconds
@@ -65,6 +65,8 @@ public class SensorManager : MonoBehaviour
         //}
 
         //while doing a move makes sure other timers are same as current time 
+
+        /*
         if (one == false)
         {
             tempTime2 = Time.time;
@@ -79,109 +81,63 @@ public class SensorManager : MonoBehaviour
             tempTime4 = Time.time;
         }
 
-        if (three == false)
+        //if (three == false)
         {
             tempTime1 = Time.time;
             tempTime2 = Time.time;
             tempTime4 = Time.time;
         }
 
-        if (four == false)
+        //if (four == false)
         {
             tempTime1 = Time.time;
             tempTime2 = Time.time;
             tempTime3 = Time.time;
         }
-
+        */
 
 
         if (_moveX > threshold && _moved == false)//left
         {
-            if (_isMoving == false)
-            {
-                two = true;
-                three = true;
-                four = true;
+            //if (_isMoving == false)
+            //{
+                //two = true;
+                //three = true;
+                //four = true;
 
-                tempTime1 = Time.time;
-                _isMoving = true;
-            }
+                //tempTime1 = Time.time;
+                //_isMoving = true;
+            //}
 
-            if (Time.time - tempTime1 >= thresholdTimer)
-            {
-                tempTime1 = Time.time;
+            //if (Time.time - tempTime1 >= thresholdTimer)
+            //{
+                //tempTime1 = Time.time;
                 _movesetManager.LookLeft();
                 _moved = true;
-                _isMoving = false;
+                //_isMoving = false;
                 StartCoroutine("PauseHandler");
-            }
+            //}
         }
 
         if (_moveX < -threshold && _moved == false)//right
         {
-            if (_isMoving == false)
-            {
-                one = true;
-                three = true;
-                four = true;
-
-                tempTime2 = Time.time;
-                _isMoving = true;
-            }
-
-            if (Time.time - tempTime2 >= thresholdTimer)
-            {
-                tempTime2 = Time.time;
                 _movesetManager.LookRight();
                 _moved = true;
-                _isMoving = false;
                 StartCoroutine("PauseHandler");
-            }
         }
 
         if (_moveY > threshold && _moved == false)//down
         {
-            if (_isMoving == false)
-            {
-                two = true;
-                one = true;
-                four = true;
-
-                tempTime3 = Time.time;
-                _isMoving = true;
-            }
-
-            if (Time.time - tempTime3 >= thresholdTimer)
-            {
-                tempTime3 = Time.time;
                 _movesetManager.LookDown();
                 _moved = true;
-                _isMoving = false;
                 StartCoroutine("PauseHandler");
-            }
         }
 
         if (_moveY < -threshold && _moved == false)//up
         {
-            if (_isMoving == false)
-            {
-                two = true;
-                three = true;
-                one = true;
-
-                tempTime4 = Time.time;
-                _isMoving = true;
-            }
-
-            if (Time.time - tempTime4 >= thresholdTimer)
-            {
-                tempTime4 = Time.time;
                 _movesetManager.LookUp();
                 _moved = true;
-                _isMoving = false;
                 StartCoroutine("PauseHandler");
-            }
-
         }
 
     }
@@ -193,10 +149,10 @@ public class SensorManager : MonoBehaviour
         //tempTime3 = Time.time;
         //tempTime4 = Time.time;
 
-        one = false;
-        two = false;
-        three = false;
-        four = false;
+        //one = false;
+        //two = false;
+        //three = false;
+        //four = false;
 
 
         Debug.Log("MOVED");

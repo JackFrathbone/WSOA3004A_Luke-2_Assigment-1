@@ -2665,7 +2665,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed6a509cf2ed994481c62ccc7bf8dd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  threshold: 2.3
+  threshold: 2.5
   detectionDelay: 0.8
   thresholdTimer: 0.1
 --- !u!114 &1403857966
